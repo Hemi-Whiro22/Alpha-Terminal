@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "alpha-terminal"
+version = "0.1.0"
+description = "Kaitiaki backend for Alpha Terminal — OCR, memory, vector, AI chains"
+authors = ["Hemi Whiro <you@example.com>"]
+packages = [{ include = "backend" }]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+fastapi = "^0.111.0"
+uvicorn = { extras = ["standard"], version = "^0.30.0" }
+openai = "^1.30.1"
+langchain = "^0.2.1"
+supabase = "^2.0.0"
+httpx = "^0.27.0"
+python-dotenv = "^1.0.1"
+pillow = "^10.3.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

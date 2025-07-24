@@ -1,0 +1,1 @@
+# This file is intended for defining base models. It is currently empty but can be populated with base model classes or functions.

@@ -1,0 +1,79 @@
+# Virtual environments
+backend/.venv/
+backend/ENV/
+backend/venv/
+backend/env.bak/
+backend/venv.bak/
+
+# Compiled Python files
+backend/__pycache__/
+backend/*.py[cod]
+backend/*.pyo
+backend/*.pyd
+
+# Distribution / Packaging
+backend/*.egg
+backend/*.egg-info/
+backend/dist/
+backend/build/
+backend/wheels/
+
+# Environment and configuration files
+backend/.env
+backend/.env.*
+backend/*.ini
+backend/*.cfg
+backend/*.toml
+backend/*.yaml
+backend/*.yml
+
+# Logs and databases
+backend/*.log
+backend/*.sqlite3
+backend/*.db
+
+# OS-specific files
+backend/.DS_Store
+backend/Thumbs.db
+
+# IDE and editor files
+backend/.vscode/
+backend/.idea/
+backend/*.code-workspace
+
+# Test coverage and reports
+backend/.coverage
+backend/*.cover
+backend/coverage/
+backend/.coveragerc
+backend/htmlcov/
+backend/nosetests.xml
+backend/coverage.xml
+backend/*.coveragerc
+
+# Temporary files
+backend/*.tmp
+backend/*.temp
+backend/*.bak
+backend/*.swp
+backend/*.swo
+backend/*.orig
+backend/*.rej
+
+# Docker
+backend/.docker
+backend/docker-compose.override.yml
+
+# Supabase CLI cache
+backend/.supabase/
+
+# Ignore Jupyter Notebook checkpoints
+backend/.ipynb_checkpoints/
+
+# Ignore generated certificates
+backend/*.pem
+backend/*.crt
+backend/*.key
+backend/*.p12
+backend/*.pfx
+
