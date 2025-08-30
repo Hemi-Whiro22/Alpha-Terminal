@@ -1,52 +1,53 @@
-#deno run --allow-net --allow-env --allow-read backend/supabase/functions/memory_log/index.ts
 // Import necessary modules
 import { serve } from "https://deno.land/std@0.203.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.0.0";
+
 // Create Supabase client
 const supabaseUrl = Deno.env.get("SUPABASE_URL") || "";
 const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+if (!supabaseUrl || !supabaseKey) {
+  console.error("Error: Missing Supabase configuration. Ensure SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY are set.");
+  Deno.exit(1);
+}
 
-// Serve function to handle incoming requests
-serve({ port: 8000 }, async (req) => {
-  const { howl, vision } = await req.json();
-  const { error } = await supabase.from("ocr_logs").insert([{ howl, vision }]);
-  if (error) return new Response(JSON.stringify({ error }), { status: 500 });
-  return new Response(JSON.stringify({ msg: "Howl received!" }));
+// Function to handle incoming requests
+async function handleRequest(req: Request): Promise<Response> {
+  try {
+    const { howl, vision } = await req.json();
 
-})
-// Serve the function
-console.log("Memory log function is running on port 8000");
-// Serve the function
-serve({ port: 8000 }, async (req) => {
-  const { howl, vision } = await req.json();
-  const { error } = await supabase.from("ocr_logs").insert([{ howl, vision }]);
-  
-  if (error) {
-    return new Response(JSON.stringify({ error }), { status: 500 });
+    if (!howl || !vision) {
+      return new Response(JSON.stringify({ error: "Missing required fields: howl and vision" }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    const { error } = await supabase.from("ocr_logs").insert([{ howl, vision }]);
+
+    if (error) {
+      console.error("Database error:", error);
+      return new Response(JSON.stringify({ error: error.message }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    return new Response(JSON.stringify({ msg: "Howl received!" }), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (err) {
+    console.error("Request handling error:", err);
+    return new Response(JSON.stringify({ error: "Invalid request" }), {
+      status: 400,
+      headers: { "Content-Type": "application/json" },
+    });
   }
-  
-  return new Response(JSON.stringify({ msg: "Howl received!" }), {
-    headers: { "Content-Type": "application/json" },
-  });
-});
-// Log the function is running
-console.log("Memory log function is running on port 8000");
+}
 
-// Serve the function
-serve({ port: 8000 }, async (req) => {
-  const { howl, vision } = await req.json();
-  const { error } = await supabase.from("ocr_logs").insert([{ howl, vision }]);
-  
-  if (error) {
-    return new Response(JSON.stringify({ error }), { status: 500 });
-  }
-  
-  return new Response(JSON.stringify({ msg: "Howl received!" }), {
-    headers: { "Content-Type": "application/json" },
-  });
-}); 
-// Log the function is running
-console.log("Memory log function is running on port 8000");
-// Log the function is running
+// Start the server
+const PORT = 8000;
+console.log(`Memory log function is running on port ${PORT}`);
+serve(handleRequest, { port: PORT });

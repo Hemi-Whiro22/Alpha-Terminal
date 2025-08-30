@@ -1,79 +1,79 @@
 # Virtual environments
-backend/.venv/
-backend/ENV/
-backend/venv/
-backend/env.bak/
-backend/venv.bak/
+.venv/
+ENV/
+venv/
+env.bak/
+venv.bak/
 
 # Compiled Python files
-backend/__pycache__/
-backend/*.py[cod]
-backend/*.pyo
-backend/*.pyd
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
 
 # Distribution / Packaging
-backend/*.egg
-backend/*.egg-info/
-backend/dist/
-backend/build/
-backend/wheels/
+*.egg
+*.egg-info/
+dist/
+build/
+wheels/
 
 # Environment and configuration files
-backend/.env
-backend/.env.*
-backend/*.ini
-backend/*.cfg
-backend/*.toml
-backend/*.yaml
-backend/*.yml
+.env
+.env.*
+*.ini
+*.cfg
+*.toml
+*.yaml
+*.yml
 
 # Logs and databases
-backend/*.log
-backend/*.sqlite3
-backend/*.db
+*.log
+*.sqlite3
+*.db
 
 # OS-specific files
-backend/.DS_Store
-backend/Thumbs.db
+.DS_Store
+Thumbs.db
 
 # IDE and editor files
-backend/.vscode/
-backend/.idea/
-backend/*.code-workspace
+.vscode/
+.idea/
+*.code-workspace
 
 # Test coverage and reports
-backend/.coverage
-backend/*.cover
-backend/coverage/
-backend/.coveragerc
-backend/htmlcov/
-backend/nosetests.xml
-backend/coverage.xml
-backend/*.coveragerc
+.coverage
+*.cover
+coverage/
+.coveragerc
+htmlcov/
+nosetests.xml
+coverage.xml
+*.coveragerc
 
 # Temporary files
-backend/*.tmp
-backend/*.temp
-backend/*.bak
-backend/*.swp
-backend/*.swo
-backend/*.orig
-backend/*.rej
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*.orig
+*.rej
 
 # Docker
-backend/.docker
-backend/docker-compose.override.yml
+.docker
+docker-compose.override.yml
 
 # Supabase CLI cache
-backend/.supabase/
+.supabase/
 
 # Ignore Jupyter Notebook checkpoints
-backend/.ipynb_checkpoints/
+.ipynb_checkpoints/
 
 # Ignore generated certificates
-backend/*.pem
-backend/*.crt
-backend/*.key
-backend/*.p12
-backend/*.pfx
+*.pem
+*.crt
+*.key
+*.p12
+*.pfx
 

@@ -1,7 +1,7 @@
 # backend/kaitiaki/rongohia/rongohia_api.py
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from services.api_service import insert_memory_log, fetch_thread_logs
+from backend.services.api_service import insert_memory_log, fetch_thread_logs
 import os
 from dotenv import load_dotenv
 load_dotenv()

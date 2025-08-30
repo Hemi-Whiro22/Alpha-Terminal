@@ -39,9 +39,34 @@ from kitenga_backend.kitenga_api.kitenga_awakens import kitenga_awakens
 from kitenga_backend.scripts.init_card_scan import init_card_scanner as init_card_scanner_tool
 import os
 import pprint   
-from dotenv import load_dotenv
-# Load environment variables
-load_dotenv()   
+from dotenv import load_dotenv, find_dotenv
+import sys
+
+# Load environment variables from .env file
+if not load_dotenv(find_dotenv()):
+    print("Error: .env file not found. Please ensure it exists and is properly configured.")
+    sys.exit(1)
+
+# Check for required environment variables and raise an error if missing
+REQUIRED_ENV_VARS = [
+    "SUPABASE_DB_NAME",
+    "SUPABASE_DB_HOST",
+    "SUPABASE_DB_PORT",
+    "SUPABASE_URL",
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "SUPABASE_ANON_KEY",
+    "CARD_SCANNER_API_KEY"
+]
+
+missing_vars = [var for var in REQUIRED_ENV_VARS if not os.getenv(var)]
+if missing_vars:
+    print(f"Error: Missing required environment variables: {', '.join(missing_vars)}")
+    sys.exit(1)
+
+# Move hardcoded values to environment variables
+MODEL = os.getenv("CARD_SCANNER_MODEL", "latest")
+MAX_RESULTS = int(os.getenv("CARD_SCANNER_MAX_RESULTS", 5))
+
 def kitenga_awakens():
     name = "kitenga"
     version = "0.1.0"
@@ -51,8 +76,7 @@ def kitenga_awakens():
     readme = "README.md"
     packages = [{"include": "scripts"}]
     api_key = os.getenv("CARD_SCANNER_API_KEY")
-    model = "latest"
-    max_results = 5
+
     print(f"Initializing {name} version {version}")
     print(f"Description: {description}")
     print(f"Authors: {', '.join(authors)}")
@@ -60,36 +84,21 @@ def kitenga_awakens():
     print(f"Readme: {readme}")
     print(f"Packages: {pprint.pformat(packages)}")
     print(f"API Key: {api_key}")
-    print(f"Model: {model}")
-    print(f"Max Results: {max_results}")
+    print(f"Model: {MODEL}")
+    print(f"Max Results: {MAX_RESULTS}")
     pprint.pprint(os.environ)
-    # Check for required environment variables
-    required_env_vars = [
-        "SUPABASE_DB_NAME",
-        "SUPABASE_DB_HOST",
-        "SUPABASE_DB_PORT",
-        "SUPABASE_URL",
-        "SUPABASE_SERVICE_ROLE_KEY",
-        "SUPABASE_ANON_KEY",
-    ]
-    for var in required_env_vars:
-        if not os.getenv(var):
-            print(f"Missing environment variable: {var}")
-            # You can set a default value or handle the missing variable case here  
-    print("🌬️ Kitenga awakens… the awa flows, and the kaitiaki watch."
-          " The journey begins with the first step into the unknown."
-          " May the winds guide you, and the waters cleanse your path."
-          " Kitenga API is ready to serve!"
-          " Card scanner initialized successfully."
-          " Kitenga environment initialized successfully."
-                
-                )
-# Call the function
-kitenga_awakens()   
-# This module initializes the Kitenga API by loading environment variables
-# and setting up the card scanner tool. It defines the Kitenga environment
-# with its name, version, description, authors, license, readme, and packages.
-# The function also checks for required environment variables and prints
-# relevant information about the Kitenga environment.
+
+# Remove redundant code and ensure proper initialization
+if __name__ == "__main__":
+    try:
+        kitenga_awakens()
+        print("Kitenga environment initialized successfully.")
+        print("🌬️ Kitenga awakens… the awa flows, and the kaitiaki watch.")
+        print("The journey begins with the first step into the unknown.")
+        print("May the winds guide you, and the waters cleanse your path.")
+        print("Kitenga API is ready to serve!")
+    except Exception as e:
+        print(f"Error during initialization: {e}")
+        sys.exit(1)
 
 

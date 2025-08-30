@@ -1,35 +1,53 @@
 # backend/services/api_service.py
 import os
+from typing import Optional
 from supabase import create_client, Client
 from dotenv import load_dotenv
-# Load environment variables
 
-
+# Load environment variables from backend/.env if present
 load_dotenv()
-# Ensure environment variables are set
-SUPABASE_URL = os.getenv("SUPABASE_URL")
-SUPABASE_SERVICE_ROLE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
-if not SUPABASE_URL or not SUPABASE_SERVICE_ROLE_KEY:
-    raise ValueError("Supabase environment variables are not set correctly.")
 
-supabase: Client = create_client(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
+_supabase: Optional[Client] = None
+
+def get_supabase() -> Optional[Client]:
+    global _supabase
+    if _supabase is not None:
+        return _supabase
+    url = os.getenv("SUPABASE_URL")
+    key = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+    if not url or not key:
+        return None
+    try:
+        _supabase = create_client(url, key)
+    except Exception:
+        _supabase = None
+    return _supabase
 
 def insert_memory_log(log):
     try:
-        res = supabase.table("memory_logs").insert({
+        client = get_supabase()
+        if client is None:
+            print("Supabase not configured; skipping insert.")
+            return False
+        res = client.table("memory_logs").insert({
             "thread_id": log.thread_id,
             "role": log.role,
             "content": log.content
         }).execute()
-        return not res.get("error")
+        # supabase-py returns a PostgrestResponse with .data and .error attributes
+        return getattr(res, "error", None) is None
     except Exception as e:
         print("Insert error:", e)
         return False
 
 def fetch_thread_logs(thread_id: str):
     try:
-        res = supabase.table("memory_logs").select("*").eq("thread_id", thread_id).order("created_at").execute()
-        return res.data
+        client = get_supabase()
+        if client is None:
+            print("Supabase not configured; returning empty logs.")
+            return []
+        res = client.table("memory_logs").select("*").eq("thread_id", thread_id).order("created_at").execute()
+        return getattr(res, "data", [])
     except Exception as e:
         print("Fetch error:", e)
         return []

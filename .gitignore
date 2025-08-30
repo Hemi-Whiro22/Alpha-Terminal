@@ -1,0 +1,60 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+coverage/
+htmlcov/
+
+# Environments
+.venv/
+env/
+venv/
+
+# OS/editor
+.DS_Store
+.idea/
+.vscode/
+*.code-workspace
+
+# Logs
+*.log
+
+# Local env
+backend/.env
+backend/.env.*
+
+# Build/dist
+dist/
+build/
+*.egg-info/
+*.egg
+wheelhouse/
+
+# Supabase CLI cache
+backend/.supabase/# Global ignores
+.venv/
+venv/
+ENV/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg
+*.egg-info/
+dist/
+build/
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.coverage
+coverage/
+.env
+.env.*
+
+# Node bits in supabase/functions
+backend/supabase/functions/**/node_modules/

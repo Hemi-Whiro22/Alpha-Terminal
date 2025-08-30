@@ -1,0 +1,10 @@
+# FastAPI app run config for non-Docker usage
+fastapi
+uvicorn[standard]
+python-dotenv
+openai
+langchain
+supabase
+httpx
+pillow
+requests

@@ -1,10 +1,11 @@
 #kitengas_ap.py
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
-from services.api_service import insert_memory_log, fetch_thread_logs
+from backend.services.api_service import insert_memory_log, fetch_thread_logs
 import datetime
 import os
 from dotenv import load_dotenv
+import requests
 
 load_dotenv()
 router = APIRouter()  
